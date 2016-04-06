@@ -16,7 +16,7 @@ function testFixture(name, options) {
       plugins: [filterImports(options)]
     });
 
-    assert.strictEqual(result.code, expected);
+    assert.strictEqual(result.code.trim(), expected.trim());
   });
 }
 
@@ -31,4 +31,8 @@ describe('babel-plugin-filter-imports', function() {
   testFixture('partial-filter-1', { assert: ['default'], cloud: ['default'] });
   testFixture('partial-filter-2', { assert: ['a', 'c'] });
   testFixture('partial-filter-3', { assert: ['a', 'c'] });
+
+  //NOTE: GJ: this is just an experiment, the actual API changes may be different
+  //          this will strip `Ember.assert` and `Ember.debug` function calls
+  testFixture('ember-debug', { ember: ['.assert', '.debug'] });
 });

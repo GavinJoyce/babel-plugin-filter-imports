@@ -41,7 +41,16 @@ module.exports = function(filteredImports) {
 function referencesFilteredImport(identifier, filteredImports) {
   for (var moduleName in filteredImports) {
     var imports = filteredImports[moduleName];
+
+    //NOTE: GJ: just spiking something, mind your head
     for (var i = 0; i < imports.length; i++) {
+      var methodName = imports[i]; //TODO: GJ: naming
+      if(methodName[0] === '.') {
+        if('.' + identifier.container.property.name === methodName) { //TODO : GJ: refactor
+          return true;
+        }
+      }
+
       if (identifier.referencesImport(moduleName, imports[i])) {
         return true;
       }
